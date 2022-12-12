@@ -9,8 +9,8 @@ abstract class DialogGraphql {
 
   static Future<void> showGraphQLErrorDialog(BuildContext context, List<GraphQLError> errors, {String? code}) async {
     final message = errors.isEmpty == true || errors.first.message.isEmpty
-        ? 'Máy chủ đang bảo trì.'
-        : (code ?? '') + errors.first.message;
+      ? 'Máy chủ đang bảo trì.'
+      : (code ?? '') + errors.first.message;
 
     return await _showSimpleDialog(context, message);
   }
