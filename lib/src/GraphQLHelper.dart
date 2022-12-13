@@ -18,8 +18,6 @@ final networkOnlyPolicies = Policies(
 
 GraphQLClient _buildClient({
   required String uri,
-  String? finger,
-  Future<String> Function()? funcGetToken,
   String? fixedToken,
 }) {
   io.HttpClient httpClient = io.HttpClient();
@@ -38,18 +36,18 @@ GraphQLClient _buildClient({
       if (fixedToken != null) {
         return fixedToken;
       }
-      if (funcGetToken == null) return null;
-      return 'Bearer ${await funcGetToken.call()}';
+      if (GraphQLApiClient.funcGetToken == null) return null;
+      return 'Bearer ${await GraphQLApiClient.funcGetToken!.call()}';
     },
   );
 
   Link link;
 
-  if (finger != null) {
+  if (GraphQLApiClient.finger != null) {
     final newFinger = AuthLink(
       headerKey: 'Finger',
       getToken: () async {
-        return finger;
+        return GraphQLApiClient.finger;
       },
     );
     link = newAuthLink.concat(newFinger).concat(httpLink);
@@ -72,19 +70,21 @@ class GraphQLApiClient {
 
   static Future<bool> Function()? refeshToken;
   static Future Function()? actionNotRefeshToken;
+  static Future<String> Function()? funcGetToken;
+  static String? finger;
 
   GraphQLApiClient({
     required String uri,
     String? finger,
     Future<String> Function()? funcGetToken,
-  }) : client = _buildClient(uri: uri, finger: finger, funcGetToken: funcGetToken);
+  }) : client = _buildClient(uri: uri);
 
   GraphQLApiClient.withFixedToken({
     required String uri,
     required String fixedToken,
     String? finger,
     Future<String> Function()? funcGetToken,
-  }) : client = _buildClient(uri: uri, fixedToken: fixedToken, finger: finger, funcGetToken: funcGetToken);
+  }) : client = _buildClient(uri: uri, fixedToken: fixedToken);
 
   final GraphQLClient client;
 
