@@ -19,7 +19,7 @@ final networkOnlyPolicies = Policies(
 GraphQLClient _buildClient({
   required String uri,
   String? finger,
-  String? token,
+  Future<String> Function()? funcGetToken,
   String? fixedToken,
 }) {
   io.HttpClient httpClient = io.HttpClient();
@@ -38,8 +38,8 @@ GraphQLClient _buildClient({
       if (fixedToken != null) {
         return fixedToken;
       }
-      if (token == null) return null;
-      return 'Bearer $token';
+      if (funcGetToken == null) return null;
+      return 'Bearer ${await funcGetToken.call()}';
     },
   );
 
@@ -76,15 +76,15 @@ class GraphQLApiClient {
   GraphQLApiClient({
     required String uri,
     String? finger,
-    String? token,
-  }) : client = _buildClient(uri: uri, finger: finger, token: token);
+    Future<String> Function()? funcGetToken,
+  }) : client = _buildClient(uri: uri, finger: finger, funcGetToken: funcGetToken);
 
   GraphQLApiClient.withFixedToken({
     required String uri,
     required String fixedToken,
     String? finger,
-    String? token,
-  }) : client = _buildClient(uri: uri, fixedToken: fixedToken, finger: finger, token: token);
+    Future<String> Function()? funcGetToken,
+  }) : client = _buildClient(uri: uri, fixedToken: fixedToken, finger: finger, funcGetToken: funcGetToken);
 
   final GraphQLClient client;
 
