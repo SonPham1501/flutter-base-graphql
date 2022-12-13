@@ -26,13 +26,13 @@ targets:
               queries_glob: graphql/*.query.graphql
               output: lib/generated/graphql_api.graphql.dart
           scalar_mapping:
-            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+            - custom_parser_import: 'package:base_graphql/base_graphql.dart'
               graphql_type: ISO8601DateTime
               dart_type: DateTime
-            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+            - custom_parser_import: 'package:base_graphql/base_graphql.dart'
               graphql_type: ISO8601Date
               dart_type: DateTime
-            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+            - custom_parser_import: 'package:base_graphql/base_graphql.dart'
               graphql_type: JSON
               dart_type: String
             - graphql_type: LongInteger
