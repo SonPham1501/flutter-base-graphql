@@ -1,6 +1,6 @@
 library base_graphql;
 
-export 'export.dart';
+export 'src/export.dart';
 
 /// A Calculator.
 class Calculator {

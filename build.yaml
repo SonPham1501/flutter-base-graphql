@@ -1,0 +1,45 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - $package$
+      - graphql/**
+      - schema.graphql
+    builders:
+      freezed:
+        generate_for:
+          include:
+            - lib/**/*state.dart
+      # json_serializable:
+      #   generate_for:
+      #     include:
+      #       - lib/generated/*
+      artemis:
+        generate_for:
+          include:
+            - lib/**
+            - graphql/*.graphql
+        options:
+          # fragments_glob: graphql/**.fragment.graphql
+          schema_mapping:
+            - schema: graphql/schema.graphql
+              queries_glob: graphql/*.query.graphql
+              output: lib/generated/graphql_api.graphql.dart
+          scalar_mapping:
+            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+              graphql_type: ISO8601DateTime
+              dart_type: DateTime
+            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+              graphql_type: ISO8601Date
+              dart_type: DateTime
+            - custom_parser_import: './lib/src/api/scalar_mapping/coercers.dart'
+              graphql_type: JSON
+              dart_type: String
+            - graphql_type: LongInteger
+              dart_type: int
+            - graphql_type: Long
+              dart_type: int
+            - graphql_type: BigInt
+              dart_type: int
+            - graphql_type: Double
+              dart_type: double
