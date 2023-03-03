@@ -1,7 +1,7 @@
 name: base_graphql
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: base_graphql
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
